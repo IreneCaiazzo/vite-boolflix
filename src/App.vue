@@ -1,16 +1,16 @@
 <script>
 import axios from 'axios';
-import { store } from './store';
 
 export default {
   data() {
     return {
-      store,
+      movies: [],
     };
   },
 
   created() {
-    axios.get('https://api.themoviedb.org/3/search/movie').then(response => (this.store.arrMovies = response.data.data));
+    axios.get('https://api.themoviedb.org/3/search/movie?api_key=f51bb24ca7ecc81a5e33bda999a99446&query=avengers')
+      .then((response) => this.movies = response.data.results);
   },
 }
 </script>
@@ -25,6 +25,12 @@ export default {
       </div>
     </nav>
   </header>
+
+  <main>
+    <div v-for="movie in movies" class="container">
+
+    </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
