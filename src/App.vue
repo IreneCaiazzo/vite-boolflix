@@ -19,21 +19,14 @@ export default {
   },
 
   created() {
-    axios.get('https://api.themoviedb.org/3/search/movie').then(response => (this.store.arrCards = response.data.data));
+    axios.get('https://api.themoviedb.org/3/search/movie').then(response => (this.store.arrMovies = response.data.data));
   },
 }
 </script>
 
 <template>
-  <header>
-    <nav>
-      <h1>Boolflix</h1>
-      <div class="search">
-        <input type="text">
-        <button>Cerca</button>
-      </div>
-    </nav>
-  </header>
+  <HeaderApp />
+  <CardList />
 </template>
 
 <style lang="scss" scoped>
@@ -41,22 +34,5 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 5rem;
-  background-color: black;
-  color: red;
-  padding-inline: 2rem;
-
-  input {
-    margin-right: 1rem;
-  }
-
 }
 </style>
