@@ -4,13 +4,27 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      movies: [],
+      inputText: "",
+      arrMovies: [],
     };
+  },
+
+  methods: {
+    searchAPI() {
+      axios.get('https://api.themoviedb.org/3/movie/550?api_key=f51bb24ca7ecc81a5e33bda999a99446', {
+        params: {
+          query: this.inputText
+        }
+      })
+        .then(response => {
+          this.arrMovies = response.data;
+        });
+    }
   },
 
   created() {
     axios.get('https://api.themoviedb.org/3/search/movie?api_key=f51bb24ca7ecc81a5e33bda999a99446&query=avengers')
-      .then((response) => this.movies = response.data.results);
+      .then((response) => this.arrMovies = response.data.results);
   },
 }
 </script>
@@ -20,8 +34,8 @@ export default {
     <nav>
       <h1>Boolflix</h1>
       <div class="search">
-        <input type="text">
-        <button>Cerca</button>
+        <input type="text" v-model="inputText" @keyup.enter="searchAPI">
+        <button @click="searchAPI">Cerca</button>
       </div>
     </nav>
   </header>
@@ -29,15 +43,11 @@ export default {
   <main>
     <div class="container">
 
-      <ul>
-        <li v-for="movie in movies">
-
-          {{ movie.title }},
-          {{ movie.original_title }},
-          {{ movie.original_language }},
-          {{ movie.vote_average }},
-
-        </li>
+      <ul v-for="movie in arrMovies">
+        <li>{{ movie.title }}</li>
+        <li>{{ movie.original_title }}</li>
+        <li>{{ movie.original_language }}</li>
+        <li>{{ movie.vote_average }}</li>
       </ul>
 
     </div>
