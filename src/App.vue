@@ -11,13 +11,14 @@ export default {
 
   methods: {
     searchAPI() {
-      axios.get('https://api.themoviedb.org/3/movie/550?api_key=f51bb24ca7ecc81a5e33bda999a99446', {
+      axios.get('https://api.themoviedb.org/3/search/movie', {
         params: {
+          api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
           query: this.inputText
         }
       })
         .then(response => {
-          this.arrMovies = response.data;
+          this.arrMovies = response.data.results;
         });
     }
   },
@@ -42,14 +43,14 @@ export default {
 
   <main>
     <div class="container">
-
-      <ul v-for="movie in arrMovies">
-        <li>{{ movie.title }}</li>
-        <li>{{ movie.original_title }}</li>
-        <li>{{ movie.original_language }}</li>
-        <li>{{ movie.vote_average }}</li>
+      <ul>
+        <li v-for="movie in arrMovies" :key="movie.id">
+          {{ movie.title }}
+          {{ movie.original_title }}
+          {{ movie.original_language }}
+          {{ movie.vote_average }}
+        </li>
       </ul>
-
     </div>
   </main>
 </template>
