@@ -27,7 +27,18 @@ export default {
   </header>
 
   <main>
-    <div v-for="movie in movies" class="container">
+    <div class="container">
+
+      <ul>
+        <li v-for="movie in movies">
+
+          {{ movie.title }},
+          {{ movie.original_title }},
+          {{ movie.original_language }},
+          {{ movie.vote_average }},
+
+        </li>
+      </ul>
 
     </div>
   </main>
