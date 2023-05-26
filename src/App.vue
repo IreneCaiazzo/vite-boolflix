@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import LangFlag from 'vue-lang-code-flags/LangFlag.vue';
 
 export default {
   data() {
@@ -7,6 +8,10 @@ export default {
       inputText: "",
       arrMovies: [],
     };
+  },
+
+  components: {
+    LangFlag,
   },
 
   methods: {
@@ -20,7 +25,7 @@ export default {
         .then(response => {
           this.arrMovies = response.data.results;
         });
-    }
+    },
   },
 
   created() {
@@ -47,7 +52,8 @@ export default {
         <li v-for="movie in arrMovies" :key="movie.id">
           {{ movie.title }}
           {{ movie.original_title }}
-          {{ movie.original_language }}
+          <LangFlag :iso="movie.original_language" :squared="false" />
+          <span class="lang-text">{{ movie.original_language }}</span>
           {{ movie.vote_average }}
         </li>
       </ul>
