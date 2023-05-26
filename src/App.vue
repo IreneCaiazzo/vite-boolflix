@@ -65,8 +65,8 @@ export default {
     <nav>
       <h1>Boolflix</h1>
       <div class="search">
-        <input type="text" v-model="inputText" @keyup.enter="searchAPI">
-        <button @click="searchAPI">Cerca</button>
+        <input type="text" v-model="inputText" @keyup.enter="requestToApi">
+        <button @click="requestToApi">Cerca</button>
       </div>
     </nav>
   </header>
