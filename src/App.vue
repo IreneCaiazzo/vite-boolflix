@@ -15,7 +15,7 @@ export default {
   },
 
   methods: {
-    searchAPI() {
+    searchAPI(url, objParams, varResult) {
       axios.get('https://api.themoviedb.org/3/search/movie', {
         params: {
           api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
@@ -26,6 +26,15 @@ export default {
           this.arrMovies = response.data.results;
         });
     },
+
+    requestToApi(inputText) {
+      this.searchAPI('https://api.themoviedb.org/3/search/movie',
+        {
+          api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
+          query: this.inputText
+        }); //film
+      this.searchAPI(url, objParams, varResult); //serie
+    }
   },
 
   created() {
@@ -81,6 +90,17 @@ nav {
   input {
     margin-right: 1rem;
   }
+}
 
+.lang-text {
+  display: none;
+}
+
+.flag-icon-undefined {
+  display: none;
+}
+
+.flag-icon-undefined+.lang-text {
+  display: inline;
 }
 </style>
