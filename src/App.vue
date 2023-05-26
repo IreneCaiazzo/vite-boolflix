@@ -7,6 +7,7 @@ export default {
     return {
       inputText: "",
       arrMovies: [],
+      arrSeries: [],
     };
   },
 
@@ -15,25 +16,40 @@ export default {
   },
 
   methods: {
+
     searchAPI(url, objParams, varResult) {
-      axios.get('https://api.themoviedb.org/3/search/movie', {
-        params: {
-          api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
-          query: this.inputText
-        }
-      })
+      axios
+        .get(url, {
+          params: objParams,
+        })
         .then(response => {
-          this.arrMovies = response.data.results;
+          if (response.request.responseURL.includes('/search/movie')) {
+
+            this.arrMovies = response.data.results;
+          } else {
+            this.arrSeries = response.data.results;
+          }
+
         });
     },
 
     requestToApi(inputText) {
+
+      const objParams = {
+        api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
+        query: this.inputText
+      };
+
+
       this.searchAPI('https://api.themoviedb.org/3/search/movie',
-        {
-          api_key: 'f51bb24ca7ecc81a5e33bda999a99446',
-          query: this.inputText
-        }); //film
-      this.searchAPI(url, objParams, varResult); //serie
+        objParams,
+        this.arrMovies
+      ); //film
+
+      this.searchAPI('https://api.themoviedb.org/3/search/tv',
+        objParams,
+        this.arrSeries
+      ); //serie
     }
   },
 
@@ -64,6 +80,12 @@ export default {
           <LangFlag :iso="movie.original_language" :squared="false" />
           <span class="lang-text">{{ movie.original_language }}</span>
           {{ movie.vote_average }}
+        </li>
+      </ul>
+
+      <ul>
+        <li v-for="serie in arrSeries" :key="serie.id">
+
         </li>
       </ul>
     </div>
